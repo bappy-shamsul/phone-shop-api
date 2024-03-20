@@ -44,4 +44,11 @@ document.getElementById('search-btn').addEventListener('click', function(){
     phoneLoader(searchValue)
 })
 
+document.getElementById('search-field').addEventListener('keydown', function(){
+    const searchField = document.getElementById('search-field');
+    const searchValue = searchField.value;
+    // console.log(searchValue)
+    phoneLoader(searchValue)
+})
+
 phoneLoader('iphone')
