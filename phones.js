@@ -34,10 +34,11 @@ const phoneShowsing = phones =>{
         phoneContainer.appendChild(phoneDiv);
     
     });
-
+toggleSpinner(false);
 }
 
 document.getElementById('search-btn').addEventListener('click', function(){
+    toggleSpinner(true);
     const searchField = document.getElementById('search-field');
     const searchValue = searchField.value;
     // console.log(searchValue)
@@ -45,10 +46,19 @@ document.getElementById('search-btn').addEventListener('click', function(){
 })
 
 document.getElementById('search-field').addEventListener('keydown', function(){
+    toggleSpinner(true);
     const searchField = document.getElementById('search-field');
     const searchValue = searchField.value;
     // console.log(searchValue)
     phoneLoader(searchValue)
 })
 
+const toggleSpinner = isLoading =>{
+    const loadSpinner = document.getElementById('spinner-load');
+    if(isLoading){
+        loadSpinner.classList.remove('d-none');
+    }else{
+        loadSpinner.classList.add('d-none');
+    }
+}
 phoneLoader('iphone')
