@@ -1,15 +1,21 @@
-const phoneLoader = async(searchValue) =>{
+const phoneLoader = async(searchValue, allProduct) =>{
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`
     const res = await fetch(url)
     const data = await res.json()
     // console.log(data.data)
-    phoneShowsing(data.data)
+    phoneShowsing(data.data, allProduct)
 }
 
-const phoneShowsing = phones =>{
+const phoneShowsing = (phones, allProduct) =>{
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.textContent = '';
-    phones = phones.slice(0, 9);
+    const seeAll = document.getElementById('see-all');
+    if(allProduct && phones.length > 9){
+        phones = phones.slice(0, 9);
+        seeAll.classList.remove('d-none')
+    }else{
+        seeAll.classList.add('d-none')
+    }
     const loadMessage = document.getElementById('warning-msg')
     if(phones.length === 0){
         loadMessage.classList.remove('d-none')
@@ -37,20 +43,32 @@ const phoneShowsing = phones =>{
 toggleSpinner(false);
 }
 
-document.getElementById('search-btn').addEventListener('click', function(){
+const seeAllClick = (allProduct) =>{
     toggleSpinner(true);
     const searchField = document.getElementById('search-field');
     const searchValue = searchField.value;
     // console.log(searchValue)
-    phoneLoader(searchValue)
+    phoneLoader(searchValue, allProduct)
+}
+
+document.getElementById('search-btn').addEventListener('click', function(){
+    // toggleSpinner(true);
+    // const searchField = document.getElementById('search-field');
+    // const searchValue = searchField.value;
+    // // console.log(searchValue)
+    // phoneLoader(searchValue)
+    seeAllClick(9)
 })
 
+
+
 document.getElementById('search-field').addEventListener('keydown', function(){
-    toggleSpinner(true);
-    const searchField = document.getElementById('search-field');
-    const searchValue = searchField.value;
-    // console.log(searchValue)
-    phoneLoader(searchValue)
+    // toggleSpinner(true);
+    // const searchField = document.getElementById('search-field');
+    // const searchValue = searchField.value;
+    // // console.log(searchValue)
+    // phoneLoader(searchValue)
+    seeAllClick(9)
 })
 
 const toggleSpinner = isLoading =>{
@@ -61,4 +79,13 @@ const toggleSpinner = isLoading =>{
         loadSpinner.classList.add('d-none');
     }
 }
+
+document.getElementById('btn-see-all').addEventListener('click', function(){
+    // toggleSpinner(true);
+    // const searchField = document.getElementById('search-field');
+    // const searchValue = searchField.value;
+    // // console.log(searchValue)
+    // phoneLoader(searchValue)
+    seeAllClick();
+})
 phoneLoader('iphone')
